@@ -1,0 +1,9 @@
+@function calculateRem($size) {
+  $remSize: $size / 24;
+  @return #{$remSize}rem;
+}
+
+.container{
+  width: calculateRem(720);
+  margin: 0 auto;
+}
