@@ -19,17 +19,15 @@ p, h1, h2{
   width: 7.2rem;
   margin: 0 auto;
   .player-box{
-    $width: 5.13rem;
-    $height: 3.04rem;
     position: absolute;
-    left: 1.04rem;
-    top: 16.27rem;
-    width: $width;
-    height: $height;
+    left: 0;
+    top: 16.20rem;
+    width: 7.2rem;
     border-radius: .1rem;
+    text-align: center;
     .player{
-      width: $width;
-      height: $height;
+      width: 5.6rem;
+      height: 3.22rem;
     }
   }
   .img-bg{

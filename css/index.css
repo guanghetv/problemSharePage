@@ -10,14 +10,14 @@ p, h1, h2 {
   margin: 0 auto; }
   .container .player-box {
     position: absolute;
-    left: 1.04rem;
-    top: 16.27rem;
-    width: 5.13rem;
-    height: 3.04rem;
-    border-radius: .1rem; }
+    left: 0;
+    top: 16.20rem;
+    width: 7.2rem;
+    border-radius: .1rem;
+    text-align: center; }
     .container .player-box .player {
-      width: 5.13rem;
-      height: 3.04rem; }
+      width: 5.6rem;
+      height: 3.22rem; }
   .container .img-bg {
     display: block;
     width: 100%; }
