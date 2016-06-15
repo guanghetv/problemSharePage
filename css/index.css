@@ -1,3 +1,85 @@
+p, h1, h2 {
+  margin: 0; }
+
+.hidden {
+  display: none; }
+
 .container {
-  width: 30rem;
+  position: relative;
+  width: 7.2rem;
   margin: 0 auto; }
+  .container .player-box {
+    position: absolute;
+    left: 1.04rem;
+    top: 16.27rem;
+    width: 5.13rem;
+    height: 3.03rem;
+    border-radius: .1rem; }
+    .container .player-box .player {
+      width: 5.13rem;
+      height: 3.03rem; }
+  .container .img-bg {
+    display: block;
+    width: 100%; }
+  .container #share {
+    position: absolute;
+    left: 50%;
+    top: 38.6rem;
+    margin-left: -2.1rem; }
+    .container #share img {
+      width: 4.2rem;
+      height: .8rem; }
+
+#banner {
+  position: fixed;
+  z-index: 99;
+  left: 50%;
+  bottom: 0;
+  width: 7.2rem;
+  height: 1.59rem;
+  margin-left: -3.6rem;
+  background: #fff; }
+  #banner .icon-app {
+    float: left;
+    width: 1.16rem;
+    height: 1.16rem;
+    margin: .21rem 0 0 .33rem; }
+  #banner .content {
+    float: left;
+    margin-left: .27rem; }
+    #banner .content h1 {
+      font-size: .3rem;
+      margin-top: .43rem; }
+    #banner .content h2 {
+      font-size: .26rem;
+      font-weight: normal;
+      color: #898989;
+      margin-top: .15rem; }
+  #banner .btn-download {
+    float: right;
+    margin: .51rem .39rem 0 0; }
+    #banner .btn-download img {
+      display: block;
+      width: 1.8rem;
+      height: .6rem; }
+
+#mask-share {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7); }
+  #mask-share .content {
+    float: right;
+    margin: .25rem .46rem 0 0;
+    padding-top: 1.6rem;
+    width: 5rem;
+    font-size: .38rem;
+    font-weight: bold;
+    line-height: 1.4;
+    color: #fff;
+    text-align: right;
+    background: url(../img/img-share.png) right top no-repeat;
+    background-size: 1.3rem auto; }
