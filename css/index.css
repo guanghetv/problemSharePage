@@ -17,7 +17,8 @@ p, h1, h2 {
     text-align: center; }
     .container .player-box .player {
       width: 5.6rem;
-      height: 3.22rem; }
+      height: 3.24rem;
+      border-radius: .3rem; }
   .container .img-bg {
     display: block;
     width: 100%; }
