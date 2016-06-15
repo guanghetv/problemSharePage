@@ -13,7 +13,7 @@
     hls.loadSource('http://pchls.media.yangcong345.com/pcM_571b87939fcb86114c61ce95.m3u8');
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED,function() {
-      //video.play();
+      video.play();
     });
   }
 
