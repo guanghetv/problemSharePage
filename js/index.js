@@ -3,23 +3,28 @@
  */
 +function() {
   //var formula1 = document.querySelector('#formula1');
+  var video = document.querySelector('#video');
   var shareBtn = document.querySelector('#share');
   var shareMask = document.querySelector('#mask-share');
   var downloadBtn = document.querySelector('.btn-download');
 
+  var videoUrl = 'http://pchls.media.yangcong345.com/pcM_571b87939fcb86114c61ce95.m3u8';
+
   if(Hls.isSupported()) {
-    var video = document.getElementById('video');
     var hls = new Hls();
-    hls.loadSource('http://pchls.media.yangcong345.com/pcM_571b87939fcb86114c61ce95.m3u8');
+    hls.loadSource(videoUrl);
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED,function() {
-      video.play();
+      //video.play();
     });
+  } else{
+    video.src = videoUrl;
   }
 
   //katex.render("x=-\\frac{-2m}{2m}=1", formula1);
 
-  shareBtn.addEventListener('click', function() {
+  shareBtn.addEventListener('click', function(e) {
+    e.preventDefault();
     shareMask.className = '';
   });
 
