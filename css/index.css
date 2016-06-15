@@ -46,7 +46,8 @@ p, h1, h2 {
     margin: .21rem 0 0 .33rem; }
   #banner .content {
     float: left;
-    margin-left: .27rem; }
+    margin-left: .27rem;
+    line-height: 1; }
     #banner .content h1 {
       font-size: .3rem;
       margin-top: .43rem; }
