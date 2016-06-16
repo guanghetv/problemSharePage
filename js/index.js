@@ -79,10 +79,10 @@
 
   // QQ分享代码
   setShareInfo({
-    title:          '父爱，在你看不到的地方',
-    summary:        '父爱如山，感觉不到只因身在此山中',
-    pic:            '../img/wx-share.png',
-    url:            'http://vs.yangcong345.com/problemSharePage/template/index.html'
+    title: '做会这道题，中考数学还能再拿10分',
+    summary: '100次中考考了101次的二次函数大题',
+    pic: 'http://vs.yangcong345.com/problemSharePage/img/wx-share.png',
+    url: 'http://vs.yangcong345.com/problemSharePage/template/index.html'
   });
 
 }()
