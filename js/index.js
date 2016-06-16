@@ -8,7 +8,9 @@
   var shareMask = document.querySelector('#mask-share');
   var downloadBtn = document.querySelector('.btn-download');
 
+  var problemId = location.pathname;
   var videoUrl = 'http://pchls.media.yangcong345.com/pcM_571b87939fcb86114c61ce95.m3u8';
+  var videoStart = false;
 
   if(Hls.isSupported()) {
     var hls = new Hls();
@@ -21,11 +23,14 @@
     video.src = videoUrl;
   }
 
+  buryPoint('enterShareProblemPage', {problemId: problemId});
+
   //katex.render("x=-\\frac{-2m}{2m}=1", formula1);
 
   shareBtn.addEventListener('click', function(e) {
     e.preventDefault();
     shareMask.className = '';
+    buryPoint('clickSPPShare', {problemId: problemId});
   });
 
   shareMask.addEventListener('click', function() {
@@ -38,6 +43,7 @@
   });
 
   function downloadApp(){
+    buryPoint('clickSPPDownloadApp', {problemId: problemId});
     if(bowser.ios) {
       window.location = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yangcong345.android.phone';
     }
@@ -76,6 +82,22 @@
       );
     }
   }
+
+  function listenVideoEvents(){
+    video.onplaying = function(){
+      if(videoStart) return;
+      videoStart = true;
+      buryPoint('startVideo', { problemId: problemId, videoId: '565589553e2e24ba6f4a4331'}, 'video');
+    };
+    // videoDom.onpause = function(){
+    //   buryPoint('startVideo', { videoName: $('.video-name').text() });
+    // };
+    //videoDom.onended = function(){
+    //  buryPoint('finishVideo', { videoName: $('.video-name').text() }, 'video');
+    //};
+  }
+
+  listenVideoEvents();
 
   // QQ分享代码
   setShareInfo({

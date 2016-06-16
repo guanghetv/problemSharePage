@@ -82,7 +82,7 @@ NodeList.prototype.each = Array.prototype.forEach;
     metaTracks.eventKey = eventKey;
     metaTracks.eventValue = eventValue;
     metaTracks.category = category;
-    metaTracks.platform = 'landing';
+    metaTracks.platform = 'pshare';
     sendPoint(metaTracks);
     // zhuge.track(eventKey, eventValue);
   }
