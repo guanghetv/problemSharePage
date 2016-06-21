@@ -6,12 +6,21 @@
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var useref = require('gulp-useref');
+var del = require('del');
+var size = require('gulp-size');
 var browserSync = require('browser-sync').create();
 
-gulp.task('sass', function () {
+gulp.task('sass', function() {
   return gulp.src('./scss/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./css'));
+});
+
+gulp.task('clean', function() {
+  return del([
+    'tmp'
+  ]);
 });
 
 gulp.task('serve', function() {
@@ -28,6 +37,13 @@ gulp.task('serve', function() {
   ]).on('change', browserSync.reload);
 });
 
-gulp.task('default', function() {
-  console.log('default task.');
+gulp.task('build', function() {
+  return gulp.src('template/*.html')
+    .pipe(useref())
+    .pipe(size({title: 'build', showFiles: true}))
+    .pipe(gulp.dest('tmp'));
+});
+
+gulp.task('default', ['clean'], function() {
+  gulp.start('build');
 });
