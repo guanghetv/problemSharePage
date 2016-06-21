@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "share page for problem",
   "main": "index.html",
-  "dependencies": {},
+  "dependencies": {
+    "mongoose": "^4.3.1",
+    "html-compress": "0.0.4",
+    "ramda": "^0.21.0",
+    "pattern-replace": "^0.1.2"
+  },
   "devDependencies": {
     "browser-sync": "^2.13.0",
     "gulp": "^3.9.1",
