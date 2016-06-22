@@ -13,9 +13,16 @@
     "browser-sync": "^2.13.0",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.10",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-if": "^2.0.1",
+    "gulp-imagemin": "^3.0.1",
+    "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.3.1",
     "gulp-size": "^2.1.0",
-    "gulp-useref": "^3.1.0"
+    "gulp-uglify": "^1.5.3",
+    "gulp-useref": "^3.1.0",
+    "imagemin-pngquant": "^5.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

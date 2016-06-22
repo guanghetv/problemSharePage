@@ -9,6 +9,13 @@ var sass = require('gulp-sass');
 var useref = require('gulp-useref');
 var del = require('del');
 var size = require('gulp-size');
+var imagemin = require('gulp-imagemin');
+var imageminPngquant = require('imagemin-pngquant');
+var gulpIf = require('gulp-if');
+var uglify = require('gulp-uglify');
+var minifyCss = require('gulp-clean-css');
+var minifyHtml = require('gulp-htmlmin');
+var replace = require('gulp-replace');
 var browserSync = require('browser-sync').create();
 
 gulp.task('sass', function() {
@@ -17,10 +24,29 @@ gulp.task('sass', function() {
     .pipe(gulp.dest('./css'));
 });
 
+gulp.task('imagemin', function() {
+  return gulp.src('./img/*')
+    .pipe(imagemin([imagemin.jpegtran(), imageminPngquant()]))
+    .pipe(gulp.dest('./tmp'));
+});
+
+gulp.task('uglify', function() {
+  return gulp.src('./template/*.html')
+    .pipe(useref())
+    .pipe(gulpIf('*.js', uglify()))
+    .pipe(gulpIf('*.css', minifyCss({keepSpecialComments: 0})))
+    //.pipe(gulpIf('*.html', minifyHtml({collapseWhitespace: true, removeComments: true, minifyJS: true, minifyCSS: true})))
+    .pipe(gulp.dest('./tmp'));
+});
+
+gulp.task('template', ['uglify'], function() {
+  return gulp.src(['./tmp/index.html'])
+    .pipe(replace(/<title>(.*)<\/title>/i, '<title>@@title</title>'))
+    .pipe(gulp.dest('./tmp/template'));
+});
+
 gulp.task('clean', function() {
-  return del([
-    'tmp'
-  ]);
+  return del.sync(['./tmp']);
 });
 
 gulp.task('serve', function() {
@@ -31,17 +57,15 @@ gulp.task('serve', function() {
   });
   gulp.watch('./scss/**/*.scss', ['sass']);
   gulp.watch([
-    'template/**/*.html',
-    'css/**/*',
-    'js/**/*.js'
+    './template/**/*.html',
+    './css/**/*',
+    './js/**/*.js'
   ]).on('change', browserSync.reload);
 });
 
-gulp.task('build', function() {
-  return gulp.src('template/*.html')
-    .pipe(useref())
-    .pipe(size({title: 'build', showFiles: true}))
-    .pipe(gulp.dest('tmp'));
+gulp.task('build', ['sass', 'imagemin', 'template'], function() {
+  return gulp.src('./tmp/**/*')
+    .pipe(size({title: 'file:', showFiles: true}));
 });
 
 gulp.task('default', ['clean'], function() {
