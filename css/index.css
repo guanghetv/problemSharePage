@@ -27,9 +27,10 @@ p, h1, h2 {
     top: .8rem;
     width: 6.2rem;
     height: 2.4rem;
-    margin-left: -3.1rem;
-    background: url(../img/topic.png) left top no-repeat;
-    background-size: 6.2rem auto; }
+    margin-left: -3.1rem; }
+    .container .topic img {
+      vertical-align: top;
+      width: 6.2rem; }
   .container .question-header {
     position: relative;
     z-index: 9;

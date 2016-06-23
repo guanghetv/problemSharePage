@@ -2,48 +2,67 @@
  * Created by zhaoyan on 16/6/13.
  */
 +function() {
-  //var formula1 = document.querySelector('#formula1');
   var video = document.querySelector('#video');
-  var shareBtn = document.querySelector('#share');
-  var shareMask = document.querySelector('#mask-share');
-  var downloadBtn = document.querySelector('.btn-download');
+  var $shareBtn = $('#share');
+  var $shareMask = $('#mask-share');
+  var $downloadBtn = $('.btn-download');
+  var $param = $('#pageInfo');
 
-  var problemId = location.pathname;
-  var videoUrl = 'http://pchls.media.yangcong345.com/pcM_571b87939fcb86114c61ce95.m3u8';
+  //var problemId = location.pathname;
+  //var videoUrl = 'http://pchls.media.yangcong345.com/pcM_571b87939fcb86114c61ce95.m3u8';
   var videoStart = false;
 
-  if(Hls.isSupported()) {
-    var hls = new Hls();
-    hls.loadSource(videoUrl);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED,function() {
-      //video.play();
-    });
-  } else{
-    video.src = videoUrl;
-  }
+  var pageInfo = {
+    problemId: $param.attr('problemId'),
+    videoId: $param.attr('videoId'),
+    mobileMp4: $param.attr('mobileMp4')
+  };
+  var shareInfo = {
+    title: $param.attr('shareTitle'),
+    desc: $param.attr('shareDesc'),
+    imgUrl: $param.attr('imgUrl'),
+    link: $param.attr('link'),
+  };
 
-  buryPoint('enterShareProblemPage', {problemId: problemId});
+  //if(Hls.isSupported()) {
+  //  var hls = new Hls();
+  //  hls.loadSource(videoUrl);
+  //  hls.attachMedia(video);
+  //  hls.on(Hls.Events.MANIFEST_PARSED,function() {
+  //    //video.play();
+  //  });
+  //} else{
+  //  video.src = videoUrl;
+  //}
 
-  //katex.render("x=-\\frac{-2m}{2m}=1", formula1);
-
-  shareBtn.addEventListener('click', function(e) {
+  $shareBtn.on('click', function(e) {
     e.preventDefault();
-    shareMask.className = '';
-    buryPoint('clickSPPShare', {problemId: problemId});
+    $shareMask.removeClass('hidden');
+    buryPoint('clickSPPShare', {problemId: pageInfo.problemId});
   });
 
-  shareMask.addEventListener('click', function() {
-    shareMask.className = 'hidden';
+  $shareMask.on('click', function() {
+    $shareMask.addClass('hidden');
   });
 
-  downloadBtn.addEventListener('click', function(e) {
+  $downloadBtn.on('click', function(e) {
     e.preventDefault();
     downloadApp();
   });
 
+  function init(){
+    buryPoint('enterShareProblemPage', {problemId: pageInfo.problemId});
+    if(pageInfo.mobileMp4.match('private')) {
+      getMp4Src(pageInfo.mobileMp4);
+    } else {
+      video.src = pageInfo.mobileMp4;
+    }
+    listenVideoEvents();
+    $param.remove();
+  }
+
   function downloadApp(){
-    buryPoint('clickSPPDownloadApp', {problemId: problemId});
+    buryPoint('clickSPPDownloadApp', {problemId: pageInfo.problemId});
     if(bowser.ios) {
       window.location = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yangcong345.android.phone';
     }
@@ -87,7 +106,7 @@
     video.onplaying = function(){
       if(videoStart) return;
       videoStart = true;
-      buryPoint('startVideo', { problemId: problemId, videoId: '565589553e2e24ba6f4a4331'}, 'video');
+      buryPoint('startVideo', { problemId: pageInfo.problemId, videoId: pageInfo.videoId}, 'video');
     };
     // videoDom.onpause = function(){
     //   buryPoint('startVideo', { videoName: $('.video-name').text() });
@@ -97,7 +116,22 @@
     //};
   }
 
-  listenVideoEvents();
+  function getMp4Src(url) {
+    $.ajax({
+      url: domain + '/config/signVideo',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({url: url})
+    }).success(function(obj) {
+      video.src = obj.url;
+    }).fail(function() {
+
+    });
+  }
+
+  init();
 
   // QQ分享代码
   setShareInfo({

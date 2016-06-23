@@ -16,14 +16,14 @@
 <body>
 <div class="container">
   <div class="logo">洋葱数学</div>
-  <div class="topic"></div>
+  <div class="topic"><img src="../img/topic.png"/></div>
   <div class="question-header"></div>
   <div class="question-body">
     <img src="../img/question.png" alt="题目"/>
   </div>
   <div class="question-footer"></div>
   <div class="player-box">
-    <video id="video" class="player" poster="http://7sbkoa.com2.z0.glb.qiniucdn.com/%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0_11bI_%E5%BE%85%E5%AE%9A%E7%B3%BB%E6%95%B0%E6%B3%95%E6%B1%82%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90%E5%BC%8F.bmp" preload="none" controls>
+    <video id="video" class="player" poster="../img/poster.bmp" preload="none" controls>
       您的浏览器不支持视频播放。
     </video>
     <div class="video-bg"></div>
@@ -50,14 +50,14 @@
     点击右上角<br>把题目分享给更多小伙伴
   </p>
 </div>
-<div id="pageInfo" class="hidden" pcMp4="@@pcMp4" mobileMp4="@@mobileMp4" hls="@@hls" poster="@@poster" shareTitle="@@shareTitle" shareDesc="@@shareDesc" imgUrl="@@imgUrl" link="@@link"></div>
+<div id="pageInfo" class="hidden" problemId="@@problemId" videoId="@@videoId" mobileMp4="@@mobileMp4" shareTitle="@@shareTitle" shareDesc="@@shareDesc" imgUrl="@@imgUrl" link="@@link"></div>
 
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="http://qzonestyle.gtimg.cn/qzone/qzact/common/share/share.js"></script>
 <!-- build:js bundle.js -->
 <script type="text/javascript" src="http://7xokcs.com2.z0.glb.qiniucdn.com/jquery-2.2.3.min.js"></script>
 <script src="../js/lib/lib.js"></script>
-<script src="../js/lib/hls.min.js"></script>
+<!--<script src="../js/lib/hls.min.js"></script>-->
 <script src="../js/index.js"></script>
 <!-- endbuild -->
 </body>

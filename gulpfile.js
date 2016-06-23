@@ -30,19 +30,23 @@ gulp.task('imagemin', function() {
     .pipe(gulp.dest('./tmp'));
 });
 
-gulp.task('uglify', function() {
+gulp.task('uglify', ['sass'], function() {
   return gulp.src('./template/*.html')
     .pipe(useref())
+    .pipe(replace(/<title>(.*)<\/title>/i, '<title>@@title</title>'))
+    .pipe(replace(/"bundle\.css"/ig, '"@@bundleCss"'))
+    .pipe(replace(/"viewport\.js"/ig, '"@@viewportJs"'))
+    .pipe(replace(/"bundle\.js"/ig, '"@@bundleJs"'))
+    .pipe(replace(/"\.\.\/img\/topic\.png"/ig, '"@@topicImg"'))
+    .pipe(replace(/"\.\.\/img\/question\.png"/ig, '"@@question"'))
+    .pipe(replace(/"\.\.\/img\/answer\.png"/ig, '"@@answer"'))
+    .pipe(replace(/"\.\.\/img\/poster\.bmp"/ig, '"@@poster"'))
+    .pipe(replace('../img/', ''))
     .pipe(gulpIf('*.js', uglify()))
+    .pipe(gulpIf('*.css', replace('../img/', '')))
     .pipe(gulpIf('*.css', minifyCss({keepSpecialComments: 0})))
     //.pipe(gulpIf('*.html', minifyHtml({collapseWhitespace: true, removeComments: true, minifyJS: true, minifyCSS: true})))
     .pipe(gulp.dest('./tmp'));
-});
-
-gulp.task('template', ['uglify'], function() {
-  return gulp.src(['./tmp/index.html'])
-    .pipe(replace(/<title>(.*)<\/title>/i, '<title>@@title</title>'))
-    .pipe(gulp.dest('./tmp/template'));
 });
 
 gulp.task('clean', function() {
@@ -59,11 +63,12 @@ gulp.task('serve', function() {
   gulp.watch([
     './template/**/*.html',
     './css/**/*',
-    './js/**/*.js'
+    './js/**/*.js',
+    './img/**/*'
   ]).on('change', browserSync.reload);
 });
 
-gulp.task('build', ['sass', 'imagemin', 'template'], function() {
+gulp.task('build', ['imagemin', 'uglify'], function() {
   return gulp.src('./tmp/**/*')
     .pipe(size({title: 'file:', showFiles: true}));
 });

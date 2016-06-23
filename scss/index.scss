@@ -43,8 +43,10 @@ p, h1, h2{
     width: 6.2rem;
     height: 2.4rem;
     margin-left: -3.1rem;
-    background: url(../img/topic.png) left top no-repeat;
-    background-size: 6.2rem auto;
+    img{
+      vertical-align: top;
+      width: 6.2rem;
+    }
   }
   .question-header{
     position: relative;
