@@ -14,26 +14,26 @@
   <!-- endbuild -->
 </head>
 <body>
-<div style="position: absolute; left: 0; top: 0; width: 0; height: 0;
-overflow: hidden">
-  <img src="../img/wx-share.png" />
-</div>
 <div class="container">
-  <img class="img-bg" src="../img/bg-part-1.png"/>
-  <img class="img-bg" src="../img/bg-part-2.png"/>
-  <img class="img-bg" src="../img/bg-part-3.png"/>
-  <img class="img-bg" src="../img/bg-part-4.png"/>
-  <img class="img-bg" src="../img/bg-part-5.png"/>
-  <img class="img-bg" src="../img/bg-part-6.png"/>
-  <img class="img-bg" src="../img/bg-part-7.png"/>
-  <img class="img-bg" src="../img/bg-part-8.png"/>
+  <div class="logo">洋葱数学</div>
+  <div class="topic"></div>
+  <div class="question-header"></div>
+  <div class="question-body">
+    <img src="../img/question.png" alt="题目"/>
+  </div>
+  <div class="question-footer"></div>
   <div class="player-box">
     <video id="video" class="player" poster="http://7sbkoa.com2.z0.glb.qiniucdn.com/%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0_11bI_%E5%BE%85%E5%AE%9A%E7%B3%BB%E6%95%B0%E6%B3%95%E6%B1%82%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90%E5%BC%8F.bmp" preload="none" controls>
       您的浏览器不支持视频播放。
     </video>
+    <div class="video-bg"></div>
   </div>
+  <div class="answer-header"></div>
+  <div class="answer-body">
+    <img src="../img/answer.png" alt="答案"/>
+  </div>
+  <div class="answer-footer"></div>
   <a id="share" href="#"><img src="../img/btn-share.png" alt="分享给小伙伴"/></a>
-  <!--<div id="formula1"></div>-->
   <div id="banner">
     <img class="icon-app" src="../img/img-app.png" alt="洋葱数学App"/>
     <div class="content">
@@ -50,6 +50,8 @@ overflow: hidden">
     点击右上角<br>把题目分享给更多小伙伴
   </p>
 </div>
+<div id="pageInfo" class="hidden" pcMp4="@@pcMp4" mobileMp4="@@mobileMp4" hls="@@hls" poster="@@poster" shareTitle="@@shareTitle" shareDesc="@@shareDesc" imgUrl="@@imgUrl" link="@@link"></div>
+
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="http://qzonestyle.gtimg.cn/qzone/qzact/common/share/share.js"></script>
 <!-- build:js bundle.js -->

@@ -1,9 +1,13 @@
-@mixin clearfix {
+@mixin clearfix{
   &:after {
     content: "";
     display: table;
     clear: both;
   }
+}
+
+@mixin textHiding{
+  text-indent: -999rem;
 }
 
 p, h1, h2{
@@ -18,32 +22,105 @@ p, h1, h2{
   position: relative;
   width: 7.2rem;
   margin: 0 auto;
-  .player-box{
+  background: #1797eb;
+  padding: 2.68rem 0 1.59rem;
+  .logo{
     position: absolute;
-    left: 0;
-    top: 16.19rem;
-    width: 7.2rem;
-    border-radius: .1rem;
+    z-index: 10;
+    left: .44rem;
+    top: .41rem;
+    width: 1.8rem;
+    height: .6rem;
+    background: url(../img/logo.png) left top no-repeat;
+    background-size: 1.8rem auto;
+    @include textHiding();
+  }
+  .topic{
+    position: absolute;
+    z-index: 8;
+    left: 50%;
+    top: .8rem;
+    width: 6.2rem;
+    height: 2.4rem;
+    margin-left: -3.1rem;
+    background: url(../img/topic.png) left top no-repeat;
+    background-size: 6.2rem auto;
+  }
+  .question-header{
+    position: relative;
+    z-index: 9;
+    width: 7.19rem;
+    height: 3.94rem;
+    margin-left: .01rem;  //为了背景对齐
+    background: url(../img/question-header.png) center top no-repeat;
+    background-size: 6.2rem auto;
+  }
+  .question-body{
     text-align: center;
-    .player{
-      width: 5.6rem;
-      height: 3.24rem;
-      border-radius: .3rem;
+    background: url(../img/question-body.png) center top repeat-y;
+    background-size: 6.2rem auto;
+    img{
+      vertical-align: top;
+      width: 5.2rem;
     }
   }
-  .img-bg{
-    display: block;
-    width: 100%;
+  .question-footer{
+    height: 2.1rem;
+    background: url(../img/question-footer.png) center top no-repeat;
+    background-size: 6.2rem auto;
+  }
+  .player-box{
+    position: relative;
+    height: 7.25rem;
+    margin-top: .46rem;
+    text-align: center;
+    .video-bg{
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 7.2rem;
+      height: 7.25rem;
+      background: url(../img/video.png) center top no-repeat;
+      background-size: 7.2rem auto;
+      pointer-events: none;
+    }
+    .player{
+      width: 5.6rem;
+      height: 3.22rem;
+      margin-top: 3.12rem;
+    }
+  }
+  .answer-header{
+    height: 5.9rem;
+    margin-top: .38rem;
+    background: url(../img/answer-header.png) center top no-repeat;
+    background-size: 7.2rem auto;
+  }
+  .answer-body{
+    padding-bottom: .8rem;
+    text-align: center;
+    background: url(../img/answer-body.png) center top repeat-y;
+    background-size: 7.2rem auto;
+    img{
+      vertical-align: top;
+      width: 5.2rem;
+    }
+  }
+  .answer-footer{
+    height: 1.8rem;
+    margin-top: -.8rem;
+    background: url(../img/answer-footer.png) center top no-repeat;
+    background-size: 7.2rem auto;
   }
   #share{
-    position: absolute;
-    left: 50%;
-    top: 39rem;
-    margin-left: -2.1rem;
+    display: block;
+    width: 4.2rem;
+    height: .8rem;
+    margin: .7rem auto .6rem;
     img{
-      display: block;
-      width: 4.2rem;
-      height: .8rem;
+      vertical-align: top;
+      width: 100%;
     }
   }
 }
