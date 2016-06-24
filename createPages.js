@@ -1,80 +1,52 @@
 /**
  * Created by sl on 16/6/21.
  */
-'use strict'
 //
 const mongoose = require('mongoose')
 const fs = require('fs')
-const db = 'mongodb://10.8.4.4/onions'
 const ShareProblem = require('./models/shareProblem')
 const R = require('ramda')
 const Replacer = require('pattern-replace');
 const HTMLUglify = require('html-compress');
+const package = require('./package.json')
+const config = require('./config')
+const problems = require('./problemShares.json')
 const option = {
   'level': 'strip'   //压缩等级分为strip、strip_comment、strip_space,默认为strip
 };
-mongoose.connect(db, {
-  server: {
-    socketOptions: {
-      keepAlive: 1
-    }
-  }
-})
 
-process.on('SIGINT', () => {
-  console.warn('Express exit')
-  if (mongoose.connection.readyState === 1) {
-    mongoose.connection.close()
-  } else {
-    process.exit(0)
-  }
-})
-
-mongoose.connection.on('error', () => {
-  console.error(err)
-  console.info('Exit process')
-  process.exit(1)
-});
-
-mongoose.connection.on('disconnected', () => {
-  console.error('Database disconnected')
-  console.info('Exit process')
-  process.exit(1)
-});
-
-mongoose.connection.on('connected', () => {
-  console.info('Database connected to ' + db)
-
-  ShareProblem.find({}, (err, problems) => {
-    problems.forEach((problem) => {
-      const template = fs.readFileSync('./template/index.html', 'utf8')
-      const options = {
-        patterns: [
-          {
-            json: {
-              "title": R.pathOr('', ['title'], problem),
-              "topicImg": R.pathOr('', ['topicImg'], problem),
-              //"selfCss": process.env.NODE_ENV === 'dev' ? `${config.devPrefix}/landingPageSelf.css` : `${config.prodPrefix}/${package.version}landingPageSelf.css`,
-              //"libJs": process.env.NODE_ENV === 'dev' ? `${config.devPrefix}/lib.js` : `${config.prodPrefix}/${package.version}lib.js`,
-              //"selfJs": process.env.NODE_ENV === 'dev' ? `${config.devPrefix}/landingPageSelf.js` : `${config.prodPrefix}/${package.version}landingPageSelf.js`,
-              "question": R.pathOr('', ['content', 'question'], problem),
-              "answer": R.pathOr('', ['content', 'answer'], problem),
-              "poster": R.pathOr('', ['video', 'poster'], problem),
-              "pcMp4": R.pathOr('', ['video', 'pcMp4'], problem),
-              "mobileMp4": R.pathOr('', ['video', 'mobileMp4'], problem),
-              "hls": R.pathOr('', ['video', 'hls'], problem),
-              "shareTitle": R.pathOr('', ['shareInfo', 'title'], problem),
-              "shareDesc": R.pathOr('', ['shareInfo', 'desc'], problem),
-              "imgUrl": R.pathOr('', ['shareInfo', 'imgUrl'], problem),
-              "link": R.pathOr('', ['shareInfo', 'link'], problem)
-            }
-          }
-        ]
+problems.forEach((problem) => {
+  const template = fs.readFileSync('./tmp/index.html', 'utf8')
+  const options = {
+    patterns: [
+      {
+        json: {
+          "problemId": R.pathOr('', ['_id'], problem).toString(),
+          "title": R.pathOr('', ['title'], problem),
+          "topicImg": R.pathOr('', ['topicImg'], problem),
+          "viewportJs": `${process.env.NODE_ENV === 'dev' ? config.devPrefix : config.prodPrefix}/viewport_${package.version}.js`,
+          "bundleCss": `${process.env.NODE_ENV === 'dev' ? config.devPrefix : config.prodPrefix}/bundle_${package.version}.css`,
+          "bundleJs": `${process.env.NODE_ENV === 'dev' ? config.devPrefix : config.prodPrefix}/bundle_${package.version}.js`,
+          "question": R.pathOr('', ['content', 'question'], problem),
+          "answer": R.pathOr('', ['content', 'answer'], problem),
+          "mobileMp4": R.pathOr('', ['video', 'mobileMp4'], problem),
+          "poster":R.pathOr('', ['video', 'poster'], problem),
+          "videoId": R.pathOr('', ['video', 'hypervideoId'], problem).toString(),
+          "shareTitle": R.pathOr('', ['shareInfo', 'title'], problem),
+          "shareDesc": R.pathOr('', ['shareInfo', 'desc'], problem),
+          "imgUrl": R.pathOr('', ['shareInfo', 'imgUrl'], problem),
+          "link": `${config.prodPrefix}/${problem.uid}.html`
+        }
       }
-      const replacer = new Replacer(options);
-      fs.writeFileSync(`./dist/${problem.uid}.html`, process.env.NODE_ENV === 'dev' ? replacer.replace(template) : HTMLUglify.compress(replacer.replace(template), option), 'utf8')
-    })
-    process.exit(1)
-  })
-
+    ]
+  }
+  const replacer = new Replacer(options);
+  fs.writeFileSync(`${config.des}/${problem.uid}.html`, HTMLUglify.compress(replacer.replace(template), option), 'utf8')
+  fs.createReadStream('./tmp/viewport.js').pipe(fs.createWriteStream(`${config.des}/viewport_${package.version}.js`));
+  fs.createReadStream('./tmp/bundle.css').pipe(fs.createWriteStream(`${config.des}/bundle_${package.version}.css`));
+  fs.createReadStream('./tmp/bundle.js').pipe(fs.createWriteStream(`${config.des}/bundle_${package.version}.js`));
 })
+setTimeout(function () {
+  process.exit(1)
+}, 2000)
+
