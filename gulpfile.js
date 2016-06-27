@@ -16,6 +16,7 @@ var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-clean-css');
 var minifyHtml = require('gulp-htmlmin');
 var replace = require('gulp-replace');
+var util = require('gulp-util');
 var browserSync = require('browser-sync').create();
 
 gulp.task('sass', function() {
@@ -42,7 +43,7 @@ gulp.task('uglify', ['sass'], function() {
     .pipe(replace(/"\.\.\/img\/answer\.png"/ig, '"@@answer"'))
     .pipe(replace(/"\.\.\/img\/poster\.bmp"/ig, '"@@poster"'))
     .pipe(replace('../img/', ''))
-    .pipe(gulpIf('*.js', uglify()))
+    .pipe(gulpIf('*.js', uglify().on('error', util.log)))
     .pipe(gulpIf('*.css', replace('../img/', '')))
     .pipe(gulpIf('*.css', minifyCss({keepSpecialComments: 0})))
     //.pipe(gulpIf('*.html', minifyHtml({collapseWhitespace: true, removeComments: true, minifyJS: true, minifyCSS: true})))

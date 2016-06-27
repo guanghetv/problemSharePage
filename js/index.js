@@ -154,28 +154,28 @@
         success: function() {
           buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechatmoment'});
         }
-      });
+      }));
 
       //分享给朋友
       wx.onMenuShareAppMessage($.extend({}, shareInfo, {
         success: function() {
           buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechat'});
         }
-      });
+      }));
 
       //分享到QQ
       wx.onMenuShareQQ($.extend({}, shareInfo, {
         success: function() {
           buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qq'});
         }
-      });
+      }));
 
       //分享到QQ空间
       wx.onMenuShareQZone($.extend({}, shareInfo, {
         success: function() {
           buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qzone'});
         }
-      });
+      }));
     });
 
     /**
