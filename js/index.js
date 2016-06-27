@@ -81,7 +81,7 @@
       var q = localStorage.q || '';
       // for android, judge the resource is available or not, if not download default apk;
       nanoajax.ajax({
-          url: 'http://yc-mobile-content.qiniudn.com/YCMath_Android_V2.5.1_' + q + '.apk',
+          url: 'http://yc-mobile-content.qiniudn.com/YCMath_Android_V2.6.2_' + q + '.apk',
           method: 'HEAD'
         },
         function (code, responseText, request) {
@@ -90,14 +90,14 @@
             case 400:
             case 500:
             case 404:
-              window.location = 'http://yc-mobile-content.qiniudn.com/YCMath_Android_V2.5.1_ychome.apk';
+              window.location = 'http://yc-mobile-content.qiniudn.com/YCMath_Android_V2.6.2_ychome.apk';
               break;
             case 204:
             case 200:
-              window.location = 'http://yc-mobile-content.qiniudn.com/YCMath_Android_V2.5.1_' + q + '.apk';
+              window.location = 'http://yc-mobile-content.qiniudn.com/YCMath_Android_V2.6.2_' + q + '.apk';
               break;
             default:
-              window.location = 'http://yc-mobile-content.qiniudn.com/YCMath_Android_V2.5.1_ychome.apk';
+              window.location = 'http://yc-mobile-content.qiniudn.com/YCMath_Android_V2.6.2_ychome.apk';
               break;
           }
         }

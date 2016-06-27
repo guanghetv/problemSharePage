@@ -1,6 +1,5 @@
-if [ ! -d "dist" ]; then
-  mkdir dist
+if [ ! -d "dev" ]; then
+  mkdir dev
 fi
 NODE_ENV=dev node createPages.js
-cp -r img dist/
-cp -r js dist/
+cp -r tmp/*  dev
