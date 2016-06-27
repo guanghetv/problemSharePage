@@ -8,8 +8,6 @@
   var $downloadBtn = $('.btn-download');
   var $param = $('#pageInfo');
 
-  //var problemId = location.pathname;
-  //var videoUrl = 'http://pchls.media.yangcong345.com/pcM_571b87939fcb86114c61ce95.m3u8';
   var videoStart = false;
 
   var pageInfo = {
@@ -22,20 +20,9 @@
     desc: $param.attr('shareDesc'),
     imgUrl: $param.attr('imgUrl'),
     link: $param.attr('link'),
-    success: function() {alert('分享成功')},
+    success: function() {},
     cancel: function() {}
   };
-
-  //if(Hls.isSupported()) {
-  //  var hls = new Hls();
-  //  hls.loadSource(videoUrl);
-  //  hls.attachMedia(video);
-  //  hls.on(Hls.Events.MANIFEST_PARSED,function() {
-  //    //video.play();
-  //  });
-  //} else{
-  //  video.src = videoUrl;
-  //}
 
   $shareBtn.on('click', function(e) {
     e.preventDefault();
@@ -144,7 +131,6 @@
       },
       data: {url: url}
     }).success(function(data) {
-      console.log(data);
       shareInit(data);
     })
   }
@@ -164,16 +150,32 @@
 
     wx.ready(function(){
       //分享到朋友圈
-      wx.onMenuShareTimeline(shareInfo);
+      wx.onMenuShareTimeline($.extend({}, shareInfo, {
+        success: function() {
+          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechatmoment'});
+        }
+      });
 
       //分享给朋友
-      wx.onMenuShareAppMessage(shareInfo);
+      wx.onMenuShareAppMessage($.extend({}, shareInfo, {
+        success: function() {
+          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechat'});
+        }
+      });
 
       //分享到QQ
-      wx.onMenuShareQQ(shareInfo);
+      wx.onMenuShareQQ($.extend({}, shareInfo, {
+        success: function() {
+          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qq'});
+        }
+      });
 
       //分享到QQ空间
-      wx.onMenuShareQZone(shareInfo);
+      wx.onMenuShareQZone($.extend({}, shareInfo, {
+        success: function() {
+          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qzone'});
+        }
+      });
     });
 
     /**
