@@ -142,7 +142,7 @@
       headers: {
         'Content-Type': 'application/json'
       },
-      data: JSON.stringify({url: url})
+      data: {url: url}
     }).success(function(data) {
       console.log(data);
       shareInit(data);
