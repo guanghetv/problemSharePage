@@ -237,7 +237,7 @@
           signature: data.signature // 签名
         }
       });
-    }
+    })
   }
   init();
 }()
