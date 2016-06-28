@@ -46,13 +46,7 @@
     }
     $param.remove();
     listenVideoEvents();
-    //getWeixinConfig();
-    shareInit({
-      appId: "wx21c2862491db3e5d",
-      nonceStr: "Wm3WZYTPz9wzccnW",
-      signature: "136e06945e6253bc0a84aff836f78a1d8c0b6293",
-      timestamp: 1467105581
-    });
+    getWeixinConfig();
   }
 
   function downloadApp() {
@@ -166,14 +160,14 @@
         title: shareInfo.title,
         summary: shareInfo.desc,
         pic: shareInfo.imgUrl,
-        url: shareInfo.link,
-        WXconfig: {
-          swapTitleInWX: true, // 是否标题内容互换（仅朋友圈，因朋友圈内只显示标题）
-          appId: data.appId, // 公众号的唯一标识
-          timestamp: data.timestamp, // 生成签名的时间戳
-          nonceStr: data.nonceStr, // 生成签名的随机串
-          signature: data.signature // 签名
-        }
+        url: shareInfo.link//,
+        //WXconfig: {
+        //  swapTitleInWX: true, // 是否标题内容互换（仅朋友圈，因朋友圈内只显示标题）
+        //  appId: data.appId, // 公众号的唯一标识
+        //  timestamp: data.timestamp, // 生成签名的时间戳
+        //  nonceStr: data.nonceStr, // 生成签名的随机串
+        //  signature: data.signature // 签名
+        //}
       });
     })
     wx.onMenuShareTimeline({
