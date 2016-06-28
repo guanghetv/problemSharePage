@@ -97,7 +97,7 @@ NodeList.prototype.each = Array.prototype.forEach;
         },
         data: JSON.stringify([point])
       }
-    ).done(function() {}).fail(function() {});
+    ).done(function() {alert(point.eventValue)}).fail(function() {alert('埋点请求失败');});
   }
 }(window);
 

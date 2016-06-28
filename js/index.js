@@ -152,6 +152,7 @@
       //分享到朋友圈
       wx.onMenuShareTimeline($.extend({}, shareInfo, {
         success: function() {
+          alert('wechatmoment');
           buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechatmoment'});
         }
       }));
@@ -159,6 +160,7 @@
       //分享给朋友
       wx.onMenuShareAppMessage($.extend({}, shareInfo, {
         success: function() {
+          alert('wechat');
           buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechat'});
         }
       }));
@@ -166,6 +168,7 @@
       //分享到QQ
       wx.onMenuShareQQ($.extend({}, shareInfo, {
         success: function() {
+          alert('qq');
           buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qq'});
         }
       }));
@@ -173,6 +176,7 @@
       //分享到QQ空间
       wx.onMenuShareQZone($.extend({}, shareInfo, {
         success: function() {
+          alert('qzone');
           buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qzone'});
         }
       }));
