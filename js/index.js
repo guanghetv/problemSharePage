@@ -151,75 +151,7 @@
 
     wx.ready(function () {
       //分享到朋友圈
-      wx.onMenuShareTimeline({
-        title: shareInfo.title,
-        imgUrl: shareInfo.imgUrl,
-        link: shareInfo.link,
-        success: function () {
-          alert('wechatmoment');
-          buryPoint('enterSPPShareSuccess', {
-            problemId: pageInfo.problemId,
-            sharePlatform: 'wechatmoment'
-          });
-        }
-      });
 
-      //分享给朋友
-      wx.onMenuShareAppMessage({
-        title: shareInfo.title,
-        desc: shareInfo.desc,
-        imgUrl: shareInfo.imgUrl,
-        link: shareInfo.link,
-        success: function () {
-          alert('wechat');
-          buryPoint('enterSPPShareSuccess', {
-            problemId: pageInfo.problemId,
-            sharePlatform: 'wechat'
-          });
-        },
-        fail: function () {
-          alert('fail');
-        },
-        complete: function () {
-          alert('complete');
-        },
-        cancel: function () {
-          alert('cancel');
-        },
-        trigger: function () {
-          alert('trigger');
-        }
-      });
-
-      //分享到QQ
-      wx.onMenuShareQQ({
-        title: shareInfo.title,
-        desc: shareInfo.desc,
-        imgUrl: shareInfo.imgUrl,
-        link: shareInfo.link,
-        success: function () {
-          alert('qq');
-          buryPoint('enterSPPShareSuccess', {
-            problemId: pageInfo.problemId,
-            sharePlatform: 'qq'
-          });
-        }
-      });
-
-      //分享到QQ空间
-      wx.onMenuShareQZone({
-        title: shareInfo.title,
-        desc: shareInfo.desc,
-        imgUrl: shareInfo.imgUrl,
-        link: shareInfo.link,
-        success: function () {
-          alert('qzone');
-          buryPoint('enterSPPShareSuccess', {
-            problemId: pageInfo.problemId,
-            sharePlatform: 'qzone'
-          });
-        }
-      });
 
       /**
        * QQ分享代码
@@ -238,6 +170,75 @@
         }
       });
     })
+    wx.onMenuShareTimeline({
+      title: shareInfo.title,
+      imgUrl: shareInfo.imgUrl,
+      link: shareInfo.link,
+      success: function () {
+        alert('wechatmoment');
+        buryPoint('enterSPPShareSuccess', {
+          problemId: pageInfo.problemId,
+          sharePlatform: 'wechatmoment'
+        });
+      }
+    });
+
+    //分享给朋友
+    wx.onMenuShareAppMessage({
+      title: shareInfo.title,
+      desc: shareInfo.desc,
+      imgUrl: shareInfo.imgUrl,
+      link: shareInfo.link,
+      success: function () {
+        alert('wechat');
+        buryPoint('enterSPPShareSuccess', {
+          problemId: pageInfo.problemId,
+          sharePlatform: 'wechat'
+        });
+      },
+      fail: function () {
+        alert('fail');
+      },
+      complete: function () {
+        alert('complete');
+      },
+      cancel: function () {
+        alert('cancel');
+      },
+      trigger: function () {
+        alert('trigger');
+      }
+    });
+
+    //分享到QQ
+    wx.onMenuShareQQ({
+      title: shareInfo.title,
+      desc: shareInfo.desc,
+      imgUrl: shareInfo.imgUrl,
+      link: shareInfo.link,
+      success: function () {
+        alert('qq');
+        buryPoint('enterSPPShareSuccess', {
+          problemId: pageInfo.problemId,
+          sharePlatform: 'qq'
+        });
+      }
+    });
+
+    //分享到QQ空间
+    wx.onMenuShareQZone({
+      title: shareInfo.title,
+      desc: shareInfo.desc,
+      imgUrl: shareInfo.imgUrl,
+      link: shareInfo.link,
+      success: function () {
+        alert('qzone');
+        buryPoint('enterSPPShareSuccess', {
+          problemId: pageInfo.problemId,
+          sharePlatform: 'qzone'
+        });
+      }
+    });
   }
   init();
 }()
