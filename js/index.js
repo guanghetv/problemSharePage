@@ -1,110 +1,6 @@
 /**
  * Created by zhaoyan on 16/6/13.
  */
-
-var shareInfo = {
-  title: $('#pageInfo').attr('shareTitle'),
-  desc: $('#pageInfo').attr('shareDesc'),
-  imgUrl: $('#pageInfo').attr('imgUrl'),
-  link: $('#pageInfo').attr('link')
-};
-
-getWeixinConfig();
-
-function getWeixinConfig() {
-  var url = location.href.split('#')[0];
-  $.ajax({
-    url: domain + '/config/weixin/token',
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    data: {url: url}
-  }).success(function(data) {
-    shareInit(data);
-  })
-}
-
-function shareInit(data) {
-  /**
-   * 微信分享代码
-   */
-  wx.config({
-    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-    appId: data.appId, // 必填，公众号的唯一标识
-    timestamp: data.timestamp, // 必填，生成签名的时间戳
-    nonceStr: data.nonceStr, // 必填，生成签名的随机串
-    signature: data.signature,// 必填，签名，见附录1
-    jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-  });
-
-  wx.ready(function(){
-    //分享到朋友圈
-    wx.onMenuShareTimeline({
-      title: shareInfo.title,
-      imgUrl: shareInfo.imgUrl,
-      link: shareInfo.link,
-      success: function() {
-        alert('wechatmoment');
-        buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechatmoment'});
-      }
-    });
-
-    //分享给朋友
-    wx.onMenuShareAppMessage({
-      title: shareInfo.title,
-      desc: shareInfo.desc,
-      imgUrl: shareInfo.imgUrl,
-      link: shareInfo.link,
-      success: function() {
-        alert('wechat');
-        buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechat'});
-      }
-    });
-
-    //分享到QQ
-    wx.onMenuShareQQ({
-      title: shareInfo.title,
-      desc: shareInfo.desc,
-      imgUrl: shareInfo.imgUrl,
-      link: shareInfo.link,
-      success: function() {
-        alert('qq');
-        buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qq'});
-      }
-    });
-
-    //分享到QQ空间
-    wx.onMenuShareQZone({
-      title: shareInfo.title,
-      desc: shareInfo.desc,
-      imgUrl: shareInfo.imgUrl,
-      link: shareInfo.link,
-      success: function() {
-        alert('qzone');
-        buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qzone'});
-      }
-    });
-  });
-
-  /**
-   * QQ分享代码
-   */
-  setShareInfo({
-    title: shareInfo.title,
-    summary: shareInfo.desc,
-    pic: shareInfo.imgUrl,
-    url: shareInfo.link,
-    WXconfig: {
-      swapTitleInWX: true, // 是否标题内容互换（仅朋友圈，因朋友圈内只显示标题）
-      appId: data.appId, // 公众号的唯一标识
-      timestamp: data.timestamp, // 生成签名的时间戳
-      nonceStr: data.nonceStr, // 生成签名的随机串
-      signature: data.signature // 签名
-    }
-  });
-}
-
 +function() {
   var video = document.querySelector('#video');
   var $shareBtn = $('#share');
@@ -118,6 +14,12 @@ function shareInit(data) {
     problemId: $param.attr('problemId'),
     videoId: $param.attr('videoId'),
     mobileMp4: $param.attr('mobileMp4')
+  };
+  var shareInfo = {
+    title: $param.attr('shareTitle'),
+    desc: $param.attr('shareDesc'),
+    imgUrl: $param.attr('imgUrl'),
+    link: $param.attr('link')
   };
 
   $shareBtn.on('click', function(e) {
@@ -144,6 +46,7 @@ function shareInit(data) {
     }
     $param.remove();
     listenVideoEvents();
+    getWeixinConfig();
   }
 
   function downloadApp(){
@@ -213,6 +116,111 @@ function shareInit(data) {
       video.src = obj.url;
     }).fail(function() {
 
+    });
+  }
+
+  function getWeixinConfig() {
+    var url = location.href.split('#')[0];
+    $.ajax({
+      url: domain + '/config/weixin/token',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {url: url}
+    }).success(function(data) {
+      shareInit(data);
+    })
+  }
+
+  function shareInit(data) {
+    /**
+     * 微信分享代码
+     */
+    wx.config({
+      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      appId: data.appId, // 必填，公众号的唯一标识
+      timestamp: data.timestamp, // 必填，生成签名的时间戳
+      nonceStr: data.nonceStr, // 必填，生成签名的随机串
+      signature: data.signature,// 必填，签名，见附录1
+      jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+
+    wx.ready(function(){
+      //分享到朋友圈
+      wx.onMenuShareTimeline({
+        title: shareInfo.title,
+        imgUrl: shareInfo.imgUrl,
+        link: shareInfo.link,
+        success: function() {
+          alert('wechatmoment');
+          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechatmoment'});
+        }
+      });
+
+      //分享给朋友
+      wx.onMenuShareAppMessage({
+        title: shareInfo.title,
+        desc: shareInfo.desc,
+        imgUrl: shareInfo.imgUrl,
+        link: shareInfo.link,
+        success: function() {
+          alert('wechat');
+          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechat'});
+        },
+        fail: function() {
+          alert('fail');
+        },
+        complete: function() {
+          alert('complete');
+        },
+        cancel: function() {
+          alert('cancel');
+        },
+        trigger: function() {
+          alert('trigger');
+        }
+      });
+
+      //分享到QQ
+      wx.onMenuShareQQ({
+        title: shareInfo.title,
+        desc: shareInfo.desc,
+        imgUrl: shareInfo.imgUrl,
+        link: shareInfo.link,
+        success: function() {
+          alert('qq');
+          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qq'});
+        }
+      });
+
+      //分享到QQ空间
+      wx.onMenuShareQZone({
+        title: shareInfo.title,
+        desc: shareInfo.desc,
+        imgUrl: shareInfo.imgUrl,
+        link: shareInfo.link,
+        success: function() {
+          alert('qzone');
+          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qzone'});
+        }
+      });
+
+    /**
+     * QQ分享代码
+     */
+    setShareInfo({
+      title: shareInfo.title,
+      summary: shareInfo.desc,
+      pic: shareInfo.imgUrl,
+      url: shareInfo.link,
+      WXconfig: {
+        swapTitleInWX: true, // 是否标题内容互换（仅朋友圈，因朋友圈内只显示标题）
+        appId: data.appId, // 公众号的唯一标识
+        timestamp: data.timestamp, // 生成签名的时间戳
+        nonceStr: data.nonceStr, // 生成签名的随机串
+        signature: data.signature // 签名
+      }
     });
   }
 
