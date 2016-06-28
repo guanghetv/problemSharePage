@@ -46,7 +46,13 @@
     }
     $param.remove();
     listenVideoEvents();
-    getWeixinConfig();
+    //getWeixinConfig();
+    shareInit({
+      appId: "wx21c2862491db3e5d",
+      nonceStr: "Wm3WZYTPz9wzccnW",
+      signature: "136e06945e6253bc0a84aff836f78a1d8c0b6293",
+      timestamp: 1467105581
+    });
   }
 
   function downloadApp() {
@@ -237,7 +243,6 @@
           signature: data.signature // 签名
         }
       });
-    }
   }
   init();
 }()
