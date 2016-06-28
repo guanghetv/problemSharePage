@@ -1,6 +1,6 @@
 {
   "name": "problem-share",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "share page for problem",
   "main": "index.html",
   "dependencies": {
