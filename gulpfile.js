@@ -43,10 +43,10 @@ gulp.task('uglify', ['sass'], function() {
     .pipe(replace(/"\.\.\/img\/answer\.png"/ig, '"@@answer"'))
     .pipe(replace(/"\.\.\/img\/poster\.bmp"/ig, '"@@poster"'))
     .pipe(replace('../img/', ''))
-    //.pipe(gulpIf('*.js', uglify().on('error', util.log)))
+    .pipe(gulpIf('*.js', uglify().on('error', util.log)))
     .pipe(gulpIf('*.css', replace('../img/', '')))
     .pipe(gulpIf('*.css', minifyCss({keepSpecialComments: 0})))
-    //.pipe(gulpIf('*.html', minifyHtml({collapseWhitespace: true, removeComments: true, minifyJS: true, minifyCSS: true})))
+    .pipe(gulpIf('*.html', minifyHtml({collapseWhitespace: true, removeComments: true, minifyJS: true, minifyCSS: true})))
     .pipe(gulp.dest('./tmp'));
 });
 
