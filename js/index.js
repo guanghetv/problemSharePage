@@ -1,7 +1,7 @@
 /**
  * Created by zhaoyan on 16/6/13.
  */
-+function() {
++function () {
   var video = document.querySelector('#video');
   var $shareBtn = $('#share');
   var $shareMask = $('#mask-share');
@@ -22,24 +22,24 @@
     link: $param.attr('link')
   };
 
-  $shareBtn.on('click', function(e) {
+  $shareBtn.on('click', function (e) {
     e.preventDefault();
     $shareMask.removeClass('hidden');
     buryPoint('clickSPPShare', {problemId: pageInfo.problemId});
   });
 
-  $shareMask.on('click', function() {
+  $shareMask.on('click', function () {
     $shareMask.addClass('hidden');
   });
 
-  $downloadBtn.on('click', function(e) {
+  $downloadBtn.on('click', function (e) {
     e.preventDefault();
     downloadApp();
   });
 
-  function init(){
+  function init() {
     buryPoint('enterShareProblemPage', {problemId: pageInfo.problemId});
-    if(pageInfo.mobileMp4.match('private')) {
+    if (pageInfo.mobileMp4.match('private')) {
       getMp4Src(pageInfo.mobileMp4);
     } else {
       video.src = pageInfo.mobileMp4;
@@ -49,18 +49,18 @@
     getWeixinConfig();
   }
 
-  function downloadApp(){
+  function downloadApp() {
     buryPoint('clickSPPDownloadApp', {problemId: pageInfo.problemId});
-    if(bowser.ios) {
+    if (bowser.ios) {
       window.location = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yangcong345.android.phone';
     }
-    if(bowser.android) {
+    if (bowser.android) {
       downloadAndroidApp();
     }
   };
 
   function downloadAndroidApp() {
-    if(/micromessenger/.test(navigator.userAgent.toLowerCase())) {
+    if (/micromessenger/.test(navigator.userAgent.toLowerCase())) {
       window.location = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yangcong345.android.phone';
     } else {
       var q = localStorage.q || '';
@@ -70,7 +70,7 @@
           method: 'HEAD'
         },
         function (code, responseText, request) {
-          switch(code){
+          switch (code) {
             case 403:
             case 400:
             case 500:
@@ -90,11 +90,14 @@
     }
   }
 
-  function listenVideoEvents(){
-    video.onplaying = function(){
-      if(videoStart) return;
+  function listenVideoEvents() {
+    video.onplaying = function () {
+      if (videoStart) return;
       videoStart = true;
-      buryPoint('startVideo', { problemId: pageInfo.problemId, videoId: pageInfo.videoId}, 'video');
+      buryPoint('startVideo', {
+        problemId: pageInfo.problemId,
+        videoId: pageInfo.videoId
+      }, 'video');
     };
     // videoDom.onpause = function(){
     //   buryPoint('startVideo', { videoName: $('.video-name').text() });
@@ -112,9 +115,9 @@
         'Content-Type': 'application/json'
       },
       data: JSON.stringify({url: url})
-    }).success(function(obj) {
+    }).success(function (obj) {
       video.src = obj.url;
-    }).fail(function() {
+    }).fail(function () {
 
     });
   }
@@ -128,7 +131,7 @@
         'Content-Type': 'application/json'
       },
       data: {url: url}
-    }).success(function(data) {
+    }).success(function (data) {
       shareInit(data);
     })
   }
@@ -146,15 +149,18 @@
       jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
 
-    wx.ready(function(){
+    wx.ready(function () {
       //分享到朋友圈
       wx.onMenuShareTimeline({
         title: shareInfo.title,
         imgUrl: shareInfo.imgUrl,
         link: shareInfo.link,
-        success: function() {
+        success: function () {
           alert('wechatmoment');
-          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechatmoment'});
+          buryPoint('enterSPPShareSuccess', {
+            problemId: pageInfo.problemId,
+            sharePlatform: 'wechatmoment'
+          });
         }
       });
 
@@ -164,20 +170,23 @@
         desc: shareInfo.desc,
         imgUrl: shareInfo.imgUrl,
         link: shareInfo.link,
-        success: function() {
+        success: function () {
           alert('wechat');
-          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'wechat'});
+          buryPoint('enterSPPShareSuccess', {
+            problemId: pageInfo.problemId,
+            sharePlatform: 'wechat'
+          });
         },
-        fail: function() {
+        fail: function () {
           alert('fail');
         },
-        complete: function() {
+        complete: function () {
           alert('complete');
         },
-        cancel: function() {
+        cancel: function () {
           alert('cancel');
         },
-        trigger: function() {
+        trigger: function () {
           alert('trigger');
         }
       });
@@ -188,9 +197,12 @@
         desc: shareInfo.desc,
         imgUrl: shareInfo.imgUrl,
         link: shareInfo.link,
-        success: function() {
+        success: function () {
           alert('qq');
-          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qq'});
+          buryPoint('enterSPPShareSuccess', {
+            problemId: pageInfo.problemId,
+            sharePlatform: 'qq'
+          });
         }
       });
 
@@ -200,30 +212,34 @@
         desc: shareInfo.desc,
         imgUrl: shareInfo.imgUrl,
         link: shareInfo.link,
-        success: function() {
+        success: function () {
           alert('qzone');
-          buryPoint('enterSPPShareSuccess', {problemId: pageInfo.problemId, sharePlatform: 'qzone'});
+          buryPoint('enterSPPShareSuccess', {
+            problemId: pageInfo.problemId,
+            sharePlatform: 'qzone'
+          });
         }
       });
 
-    /**
-     * QQ分享代码
-     */
-    setShareInfo({
-      title: shareInfo.title,
-      summary: shareInfo.desc,
-      pic: shareInfo.imgUrl,
-      url: shareInfo.link,
-      WXconfig: {
-        swapTitleInWX: true, // 是否标题内容互换（仅朋友圈，因朋友圈内只显示标题）
-        appId: data.appId, // 公众号的唯一标识
-        timestamp: data.timestamp, // 生成签名的时间戳
-        nonceStr: data.nonceStr, // 生成签名的随机串
-        signature: data.signature // 签名
-      }
-    });
+      /**
+       * QQ分享代码
+       */
+      setShareInfo({
+        title: shareInfo.title,
+        summary: shareInfo.desc,
+        pic: shareInfo.imgUrl,
+        url: shareInfo.link,
+        WXconfig: {
+          swapTitleInWX: true, // 是否标题内容互换（仅朋友圈，因朋友圈内只显示标题）
+          appId: data.appId, // 公众号的唯一标识
+          timestamp: data.timestamp, // 生成签名的时间戳
+          nonceStr: data.nonceStr, // 生成签名的随机串
+          signature: data.signature // 签名
+        }
+      });
+    }
+
+    init();
+
   }
-
-  init();
-
 }()
